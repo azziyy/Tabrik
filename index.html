@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tug'ilgan kuningiz muborak!</title>
+    <!-- Google Fonts orqali chiroyli shrift -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #f1c40f;
+            --white: #ffffff;
+            --dark: #0f0f0f;
+            --soft-pink: #ff4d6d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--dark);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+        }
+
+        /* Kirish ekrani - Konvert */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 1.5s ease-in-out;
+        }
+
+        .gift-box {
+            font-size: 80px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+            filter: drop-shadow(0 0 15px var(--gold));
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .click-text {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        /* Asosiy Konteyner */
+        .card {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card.reveal {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Rasm dizayni */
+        .profile-wrapper {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 30px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid var(--gold);
+            box-shadow: 0 0 25px rgba(241, 196, 15, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .circle-animation {
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border: 2px dashed var(--gold);
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Matnlar */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 25px;
+        }
+
+        /* Sharlar va Konfetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            top: -10px;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 55px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: float 10s infinite ease-in;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0); }
+            100% { transform: translateY(-110vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kirish qismi -->
+    <div id="overlay" onclick="launchGreeting()">
+        <div class="gift-box">🎁</div>
+        <div class="click-text">Sizga sovg'a bor...</div>
+    </div>
+
+    <!-- Asosiy tabrik -->
+    <div class="card" id="birthdayCard">
+        <div class="profile-wrapper">
+            <div class="circle-animation"></div>
+            <img src="1000128737.png" alt="Happy Birthday" class="profile-img">
+        </div>
+        <h1>Happy Birthday!</h1>
+        <p>
+            Tug'ilgan kuningiz muborak bo'lsin! 🌟<br>
+            Ushbu yangi yoshingiz sizga cheksiz quvonch, omad va hayratlanarli lahzalarni tuhfa etsin. Har bir orzuyingiz ijobat bo'lsin!
+        </p>
+        <div style="font-size: 0.9rem; color: var(--gold);">✨ Eng ezgu niyatlar bilan! ✨</div>
+    </div>
+
+    <!-- Happy Birthday Musiqasi -->
+    <audio id="hbdMusic" preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <!-- Izoh: Yuqoridagi link namunaviy. Agar sizda aniq 'Happy Birthday' mp3 bo'lsa, src qismiga uning linkini qo'ying -->
+    </audio>
+
+    <script>
+        function launchGreeting() {
+            // 1. Ekranni yashirish
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 1500);
+
+            // 2. Kartani ko'rsatish
+            const card = document.getElementById('birthdayCard');
+            card.classList.add('reveal');
+
+            // 3. Musiqani chalish
+            const music = document.getElementById('hbdMusic');
+            music.play();
+
+            // 4. Effektlarni ishga tushirish
+            createConfetti();
+            createBalloons();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 50%)`;
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.opacity = Math.random();
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function createBalloons() {
+            const colors = ['#ff4d6d', '#ffb703', '#8ecae6', '#fb8500', '#2a9d8f'];
+            setInterval(() => {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animationDuration = (Math.random() * 5 + 7) + 's';
+                document.body.appendChild(balloon);
+                
+                setTimeout(() => balloon.remove(), 10000);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
