@@ -28,14 +28,14 @@
     body { 
         background-color: var(--bg-base); 
         color: var(--text-main); 
-        font-family: 'Outfit', 'Inter', sans-serif; 
+        font-family: 'Poppins', 'Inter', sans-serif; 
         overflow-x: hidden; 
         -webkit-tap-highlight-color: transparent;
         line-height: 1.5;
     }
 
-    h1, h2, h3, .font-display {
-        font-family: 'Outfit', sans-serif;
+    h1, h2, h3 {
+        font-family: 'Poppins', sans-serif;
         letter-spacing: -0.02em;
     }
 
@@ -51,14 +51,14 @@
         background: var(--bg-card);
         backdrop-filter: blur(10px);
         border: 1px solid var(--border-glass);
-        border-radius: 24px;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 16px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
     }
 
     .music-card:active {
-        transform: scale(0.95) translateY(2px);
+        transform: scale(0.95);
         background: var(--bg-card-hover);
         border-color: rgba(59, 130, 246, 0.3);
     }
@@ -66,16 +66,16 @@
     .play-overlay {
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+        background: rgba(59, 130, 246, 0.2);
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
         transition: all 0.3s ease;
     }
+
     .music-card:active .play-overlay { 
         opacity: 1;
-        backdrop-filter: blur(4px);
     }
 
     .hide-scroll {
@@ -86,7 +86,7 @@
     .hide-scroll::-webkit-scrollbar { display: none; }
     
     .fade-in { 
-        animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+        animation: fadeIn 0.6s ease forwards; 
     }
     @keyframes fadeIn { 
         from { opacity: 0; transform: translateY(20px); } 
@@ -94,8 +94,8 @@
     }
     
     .slide-up { 
-        transform: translateY(105%); 
-        transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1); 
+        transform: translateY(100%); 
+        transition: transform 0.4s ease; 
     }
     .slide-up.active { 
         transform: translateY(0); 
@@ -103,9 +103,9 @@
 
     .neon-avatar {
         position: relative;
-        padding: 4px;
+        padding: 3px;
         background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
-        border-radius: 30px;
+        border-radius: 50%;
         animation: neonRotate 4s linear infinite;
         background-size: 200% 200%;
     }
@@ -117,12 +117,11 @@
 
     .progress-container { 
         width: 100%; 
-        height: 5px; 
+        height: 4px; 
         background: rgba(255, 255, 255, 0.05); 
         border-radius: 10px; 
         cursor: pointer; 
-        position: relative; 
-        overflow: visible;
+        position: relative;
     }
     .progress-bar { 
         height: 100%; 
@@ -130,31 +129,18 @@
         border-radius: 10px; 
         width: 0%; 
         position: relative; 
-        box-shadow: 0 0 15px var(--accent-glow);
-    }
-    .progress-bar::after { 
-        content: ''; 
-        position: absolute; 
-        right: -6px; 
-        top: 50%; 
-        transform: translateY(-50%); 
-        width: 14px; 
-        height: 14px; 
-        background: #ffffff; 
-        border-radius: 50%; 
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 5px var(--accent-primary);
-        border: 2px solid var(--accent-primary);
+        box-shadow: 0 0 10px var(--accent-glow);
     }
 
     nav.glass-panel {
-        border-radius: 32px 32px 0 0;
+        border-radius: 20px 20px 0 0;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         padding-bottom: env(safe-area-inset-bottom);
     }
 
     .volume-slider {
         width: 100%;
-        height: 4px;
+        height: 3px;
         border-radius: 5px;
         background: linear-gradient(to right, #3b82f6, #60a5fa);
         outline: none;
@@ -163,63 +149,40 @@
 
     .volume-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
-        appearance: none;
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background: white;
         cursor: pointer;
-    }
-
-    .volume-slider::-moz-range-thumb {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: white;
-        cursor: pointer;
-        border: none;
-    }
-
-    .pulse-animation {
-        animation: volumePulse 0.5s ease;
-    }
-
-    @keyframes volumePulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
     }
 
     .stat-box {
         background: rgba(59, 130, 246, 0.1);
         border: 1px solid rgba(59, 130, 246, 0.3);
-        border-radius: 16px;
-        padding: 15px;
+        border-radius: 12px;
+        padding: 12px;
         text-align: center;
     }
 
     .stat-number {
-        font-size: 28px;
+        font-size: 22px;
         font-weight: bold;
         color: #3b82f6;
-        display: block;
     }
 
     .stat-label {
-        font-size: 12px;
+        font-size: 11px;
         color: #94a3b8;
-        text-transform: uppercase;
-        margin-top: 5px;
-        letter-spacing: 1px;
+        margin-top: 4px;
     }
 
     .share-modal {
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.7);
-        display: flex;
+        display: none;
         align-items: flex-end;
         z-index: 999;
-        display: none;
     }
 
     .share-modal.active {
@@ -229,8 +192,8 @@
     .share-sheet {
         background: #0a0f1d;
         width: 100%;
-        border-radius: 30px 30px 0 0;
-        padding: 20px;
+        border-radius: 20px 20px 0 0;
+        padding: 16px;
         animation: slideUp 0.3s ease;
     }
 
@@ -241,55 +204,55 @@
     </style>
 
 </head>
-<body class="pb-32">
+<body class="pb-28">
 
     <!-- Header -->
-    <header class="px-6 py-4 flex justify-between items-center sticky top-0 z-40 glass-panel border-b-0">
-        <button class="text-xl text-slate-400 hover:text-white transition w-10 h-10 flex items-center justify-start">
+    <header class="px-4 py-3 flex justify-between items-center sticky top-0 z-40 glass-panel border-b-0">
+        <button class="text-lg text-slate-400 hover:text-white transition">
             <i class="fas fa-bars-staggered"></i>
         </button>
-        <h1 class="text-xl font-bold tracking-widest text-white italic uppercase font-display flex items-center gap-1">
-            AZIZBEK <span class="text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded-md text-sm not-italic ml-1">PRO</span>
+        <h1 class="text-lg font-bold text-white italic uppercase flex items-center gap-1">
+            AZIZBEK <span class="text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded text-xs">PRO</span>
         </h1>
-        <button onclick="showFavorites()" class="text-xl text-red-500 hover:scale-110 transition w-10 h-10 flex items-center justify-end">
+        <button onclick="showFavorites()" class="text-lg text-red-500 hover:scale-110 transition">
             <i class="fas fa-heart"></i>
         </button>
     </header>
 
     <!-- Main Views -->
-    <main id="view-home" class="fade-in">
-        <div class="pt-6 pb-2">
-            <div id="stories-container" class="flex gap-4 px-6 overflow-x-auto hide-scroll snap-x"></div>
+    <main id="view-home" class="fade-in pb-4">
+        <div class="pt-4 pb-2">
+            <div id="stories-container" class="flex gap-3 px-4 overflow-x-auto hide-scroll snap-x"></div>
         </div>
-        <div id="dynamic-content" class="pb-6">
-            <div class="flex justify-center items-center h-40">
-                <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div id="dynamic-content" class="pb-4">
+            <div class="flex justify-center items-center h-32">
+                <div class="w-6 h-6 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
         </div>
     </main>
 
-    <main id="view-news" class="hidden px-6 py-8 fade-in">
-        <h2 class="font-bold text-2xl mb-8 tracking-tight font-display text-white">Yangiliklar</h2>
-        <div id="news-area" class="grid gap-6"></div>
+    <main id="view-news" class="hidden px-4 py-6 fade-in">
+        <h2 class="font-bold text-xl mb-6 text-white">Yangiliklar</h2>
+        <div id="news-area" class="grid gap-4"></div>
     </main>
 
-    <main id="view-profile" class="hidden px-6 py-10 text-center fade-in">
-        <h2 class="font-bold text-2xl mb-8 text-white font-display">Mening Profilim</h2>
+    <main id="view-profile" class="hidden px-4 py-6 text-center fade-in">
+        <h2 class="font-bold text-xl mb-6 text-white">Mening Profilim</h2>
         <div id="profile-area" class="flex flex-col items-center">
-            <div class="relative w-32 h-32 mx-auto mb-6 neon-avatar">
+            <div class="relative w-24 h-24 mx-auto mb-4 neon-avatar">
                 <img id="profile-img" src="https://raw.githubusercontent.com/azziyy/Tabrik/refs/heads/main/Screenshot_2026-05-12-19-14-39-471_com.instagram.android.png" class="w-full h-full rounded-full object-cover">
             </div>
-            <h3 class="text-2xl font-bold text-white mb-6 font-display">Azizbek</h3>
+            <h3 class="text-xl font-bold text-white mb-4">Azizbek</h3>
             
             <!-- Statistics -->
-            <div class="grid grid-cols-3 gap-3 w-full mb-8">
+            <div class="grid grid-cols-3 gap-2 w-full mb-6">
                 <div class="stat-box">
                     <span class="stat-number" id="stat-songs">0</span>
-                    <span class="stat-label">Qo'shiqlar</span>
+                    <span class="stat-label">Qo'shiq</span>
                 </div>
                 <div class="stat-box">
                     <span class="stat-number" id="stat-hours">0</span>
-                    <span class="stat-label">Soatlar</span>
+                    <span class="stat-label">Soat</span>
                 </div>
                 <div class="stat-box">
                     <span class="stat-number" id="stat-favorites">0</span>
@@ -298,131 +261,90 @@
             </div>
 
             <!-- Bio -->
-            <div class="music-card p-6 rounded-2xl text-left border-white/5 w-full">
-                <h4 class="text-white font-semibold mb-2 font-display">📝 Haqimda</h4>
-                <p class="text-slate-300 text-sm leading-relaxed">🎵 Musiqa sevuvchi | 💻 Developer | 🚀 Innovator</p>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="grid grid-cols-2 gap-3 w-full mt-6">
-                <button onclick="openVolumeControl()" class="music-card p-3 rounded-xl text-center border-white/5 flex items-center justify-center gap-2 hover:bg-white/5 transition">
-                    <i class="fas fa-volume-high text-blue-500"></i>
-                    <span class="text-sm font-semibold text-white">Ovoz</span>
-                </button>
-                <button onclick="openShareModal()" class="music-card p-3 rounded-xl text-center border-white/5 flex items-center justify-center gap-2 hover:bg-white/5 transition">
-                    <i class="fas fa-share-alt text-green-500"></i>
-                    <span class="text-sm font-semibold text-white">Ulashish</span>
-                </button>
+            <div class="music-card p-4 rounded-lg text-left w-full">
+                <h4 class="text-white font-semibold mb-2">📝 Haqimda</h4>
+                <p class="text-slate-300 text-sm">🎵 Musiqa sevuvchi | 💻 Developer | 🚀 Innovator</p>
             </div>
         </div>
     </main>
 
-    <main id="view-favorites" class="hidden px-6 py-8 fade-in">
-        <h2 class="font-bold text-2xl mb-8 text-white font-display flex items-center gap-3">
+    <main id="view-favorites" class="hidden px-4 py-6 fade-in">
+        <h2 class="font-bold text-xl mb-6 text-white flex items-center gap-2">
             <i class="fas fa-heart text-red-500"></i> Sevimlilar
         </h2>
-        <div id="favorites-area" class="flex flex-col gap-3"></div>
+        <div id="favorites-area" class="flex flex-col gap-2"></div>
     </main>
 
     <!-- Mini Player -->
-    <div id="mini-player" class="fixed bottom-[100px] left-4 right-4 glass-panel rounded-3xl p-2 z-30 hidden transition-all cursor-pointer shadow-2xl" onclick="openFullPlayer()">
-        <div class="flex items-center gap-4 px-2 py-1">
-            <div class="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/10 shrink-0">
+    <div id="mini-player" class="fixed bottom-24 left-3 right-3 glass-panel rounded-2xl p-2 z-30 hidden transition-all cursor-pointer shadow-xl" onclick="openFullPlayer()">
+        <div class="flex items-center gap-3 px-2 py-1">
+            <div class="relative w-12 h-12 rounded-lg overflow-hidden shrink-0">
                 <img id="mp-img" src="" class="w-full h-full object-cover">
             </div>
             <div class="flex-1 min-w-0">
-                <h4 id="mp-title" class="truncate font-bold text-[15px] text-white font-display mb-0.5">Nomi</h4>
-                <p id="mp-artist" class="text-[12px] text-slate-400 truncate">San'atkor</p>
+                <h4 id="mp-title" class="truncate font-bold text-sm text-white mb-0.5">Nomi</h4>
+                <p id="mp-artist" class="text-xs text-slate-400 truncate">San'atkor</p>
             </div>
-            <button class="w-11 h-11 bg-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/20" onclick="togglePlay(event)">
-                <i id="mp-icon" class="fas fa-play text-white text-sm ml-0.5"></i>
+            <button class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center" onclick="togglePlay(event)">
+                <i id="mp-icon" class="fas fa-play text-white text-xs ml-0.5"></i>
             </button>
         </div>
     </div>
 
     <!-- Full Player -->
-    <div id="full-player" class="fixed inset-0 bg-[#020408] z-50 slide-up flex flex-col overflow-hidden">
-        <!-- Dynamic Background -->
+    <div id="full-player" class="fixed inset-0 bg-[#020408] z-50 slide-up flex flex-col overflow-auto">
         <div class="absolute inset-0 z-0">
-            <img id="fp-bg-blur" src="" class="w-full h-full object-cover opacity-30 blur-[80px] scale-150">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#020408] via-transparent to-black/20"></div>
+            <img id="fp-bg-blur" src="" class="w-full h-full object-cover opacity-20 blur-3xl">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020408]"></div>
         </div>
 
-        <div class="relative z-10 flex flex-col h-full px-8 py-12">
+        <div class="relative z-10 flex flex-col px-4 py-6">
             <!-- Header -->
-            <div class="flex justify-between items-center mb-10">
-                <button onclick="closeFullPlayer()" class="w-12 h-12 flex items-center justify-center text-xl text-white/70 bg-white/5 rounded-2xl backdrop-blur-xl border border-white/10 hover:bg-white/10 transition">
+            <div class="flex justify-between items-center mb-6">
+                <button onclick="closeFullPlayer()" class="w-10 h-10 flex items-center justify-center text-lg text-white/70 bg-white/5 rounded-lg">
                     <i class="fas fa-chevron-down"></i>
                 </button>
-                <div class="text-center">
-                    <p class="text-[10px] tracking-[4px] uppercase font-bold text-white/40">IJRO ETILMOQDA</p>
-                </div>
-                <button onclick="toggleFavoriteCurrent()" class="w-12 h-12 flex items-center justify-center text-xl bg-white/5 rounded-2xl backdrop-blur-xl border border-white/10 hover:bg-white/10 transition">
+                <p class="text-xs tracking-widest uppercase font-bold text-white/40">Playing</p>
+                <button onclick="toggleFavoriteCurrent()" class="w-10 h-10 flex items-center justify-center text-lg bg-white/5 rounded-lg">
                     <i id="fp-heart" class="far fa-heart text-white/70"></i>
                 </button>
             </div>
             
-            <!-- Album Artwork -->
-            <div class="flex-1 flex items-center justify-center mb-10">
-                <div class="w-full max-w-[320px] aspect-square relative">
-                    <img id="fp-img" src="" class="w-full h-full rounded-[40px] object-cover shadow-[0_40px_80px_rgba(0,0,0,0.6)] border border-white/10 relative z-10">
-                    <div class="absolute inset-4 bg-blue-500/20 blur-3xl -z-0"></div>
+            <!-- Album Art -->
+            <div class="flex items-center justify-center mb-6">
+                <div class="w-40 h-40">
+                    <img id="fp-img" src="" class="w-full h-full rounded-3xl object-cover shadow-lg">
                 </div>
             </div>
             
             <!-- Info -->
-            <div class="flex justify-between items-end mb-8">
-                <div class="flex-1 min-w-0">
-                    <h2 id="fp-title" class="text-3xl font-black text-white mb-2 font-display truncate tracking-tight">Qo'shiq nomi</h2>
-                    <p id="fp-artist" class="text-blue-400 font-bold text-lg truncate opacity-90 tracking-wide">San'atkor</p>
-                </div>
-                <button onclick="openShareModal()" class="w-12 h-12 flex items-center justify-center bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition">
-                    <i class="fas fa-share-alt text-blue-500"></i>
-                </button>
+            <div class="mb-6">
+                <h2 id="fp-title" class="text-2xl font-bold text-white mb-1 truncate">Qo'shiq</h2>
+                <p id="fp-artist" class="text-blue-400 font-bold text-base truncate">San'atkor</p>
             </div>
 
-            <!-- Progress Bar -->
-            <div class="mb-10">
-                <div class="progress-container mb-4" onclick="seekAudio(event)">
+            <!-- Progress -->
+            <div class="mb-6">
+                <div class="progress-container mb-2" onclick="seekAudio(event)">
                     <div id="fp-progress" class="progress-bar"></div>
                 </div>
-                <div class="flex justify-between text-[11px] font-bold text-white/30 tracking-widest">
+                <div class="flex justify-between text-xs font-bold text-white/30">
                     <span id="fp-current-time">0:00</span>
                     <span id="fp-duration">0:00</span>
                 </div>
             </div>
             
             <!-- Controls -->
-            <div class="flex justify-between items-center px-2">
-                <button class="text-xl text-white/30 hover:text-white transition"><i class="fas fa-shuffle"></i></button>
-                <div class="flex items-center gap-8">
-                    <button onclick="previousSong()" class="text-3xl text-white/80 hover:text-white transition active:scale-90"><i class="fas fa-backward-step"></i></button>
-                    <button onclick="togglePlay()" class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-[0_15px_40px_rgba(59,130,246,0.4)] active:scale-95 transition-transform hover:bg-blue-700">
-                        <i id="fp-icon" class="fas fa-play text-4xl text-white ml-1"></i>
+            <div class="flex justify-between items-center px-2 mb-6">
+                <button class="text-lg text-white/30"><i class="fas fa-shuffle"></i></button>
+                <div class="flex items-center gap-6">
+                    <button onclick="previousSong()" class="text-2xl text-white/80"><i class="fas fa-backward-step"></i></button>
+                    <button onclick="togglePlay()" class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                        <i id="fp-icon" class="fas fa-play text-2xl text-white ml-0.5"></i>
                     </button>
-                    <button onclick="nextSong()" class="text-3xl text-white/80 hover:text-white transition active:scale-90"><i class="fas fa-forward-step"></i></button>
+                    <button onclick="nextSong()" class="text-2xl text-white/80"><i class="fas fa-forward-step"></i></button>
                 </div>
-                <button class="text-xl text-white/30 hover:text-white transition"><i class="fas fa-redo"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Volume Control Modal -->
-    <div id="volume-modal" class="fixed inset-0 bg-black/50 z-40 hidden flex items-end">
-        <div class="glass-panel w-full rounded-t-3xl p-6 border-b-0">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-white font-bold text-lg">Ovoz Boshqaruvi</h3>
-                <button onclick="closeVolumeModal()" class="text-white/50 hover:text-white">
-                    <i class="fas fa-xmark text-xl"></i>
-                </button>
-            </div>
-            <div class="flex items-center gap-4">
-                <i class="fas fa-volume-low text-blue-500"></i>
-                <input type="range" id="volume-slider" min="0" max="100" value="70" class="volume-slider flex-1">
-                <i class="fas fa-volume-high text-blue-500"></i>
-            </div>
-            <div class="text-center mt-4">
-                <span class="text-slate-400 text-sm" id="volume-percent">70%</span>
+                <button onclick="openShareModal()" class="text-lg text-white/30"><i class="fas fa-share-alt"></i></button>
             </div>
         </div>
     </div>
@@ -430,28 +352,24 @@
     <!-- Share Modal -->
     <div id="share-modal" class="share-modal">
         <div class="share-sheet">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-white font-bold text-lg">Qo'shiqni Ulashish</h3>
-                <button onclick="closeShareModal()" class="text-white/50 hover:text-white">
-                    <i class="fas fa-xmark text-xl"></i>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-white font-bold">Ulashish</h3>
+                <button onclick="closeShareModal()" class="text-white/50">
+                    <i class="fas fa-xmark"></i>
                 </button>
             </div>
             
-            <div class="flex gap-3 flex-wrap">
-                <button onclick="shareTo('telegram')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
-                    <i class="fab fa-telegram text-blue-500 text-2xl"></i>
+            <div class="flex gap-2 flex-wrap">
+                <button onclick="shareTo('telegram')" class="flex flex-col items-center gap-1 p-3 glass-panel rounded-lg">
+                    <i class="fab fa-telegram text-blue-500 text-xl"></i>
                     <span class="text-xs text-slate-300">Telegram</span>
                 </button>
-                <button onclick="shareTo('whatsapp')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
-                    <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+                <button onclick="shareTo('whatsapp')" class="flex flex-col items-center gap-1 p-3 glass-panel rounded-lg">
+                    <i class="fab fa-whatsapp text-green-500 text-xl"></i>
                     <span class="text-xs text-slate-300">WhatsApp</span>
                 </button>
-                <button onclick="shareTo('twitter')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
-                    <i class="fab fa-twitter text-sky-500 text-2xl"></i>
-                    <span class="text-xs text-slate-300">Twitter</span>
-                </button>
-                <button onclick="shareTo('copy')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
-                    <i class="fas fa-copy text-purple-500 text-2xl"></i>
+                <button onclick="shareTo('copy')" class="flex flex-col items-center gap-1 p-3 glass-panel rounded-lg">
+                    <i class="fas fa-copy text-purple-500 text-xl"></i>
                     <span class="text-xs text-slate-300">Nusxalash</span>
                 </button>
             </div>
@@ -459,45 +377,56 @@
     </div>
 
     <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 w-full glass-panel border-t border-white/5 pb-6 pt-3 px-8 flex justify-between items-center z-40 rounded-t-[35px] shadow-[0_-15px_40px_rgba(0,0,0,0.6)]">
-        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center gap-1 transition-all duration-300 text-blue-500">
-            <i class="fas fa-music text-[22px] mb-0.5"></i>
-            <span class="text-[9px] font-black tracking-[1px]">ASOSIY</span>
+    <nav class="fixed bottom-0 w-full glass-panel border-t border-white/5 pb-4 pt-2 px-6 flex justify-between items-center z-40 rounded-t-2xl">
+        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center gap-0.5 transition-all text-blue-500">
+            <i class="fas fa-music text-lg"></i>
+            <span class="text-xs font-bold">ASOSIY</span>
         </button>
-        <button onclick="switchTab('news')" id="nav-news" class="flex flex-col items-center gap-1 transition-all duration-300 text-slate-500">
-            <i class="far fa-newspaper text-[22px] mb-0.5"></i>
-            <span class="text-[9px] font-black tracking-[1px]">YANGILIK</span>
+        <button onclick="switchTab('news')" id="nav-news" class="flex flex-col items-center gap-0.5 transition-all text-slate-500">
+            <i class="far fa-newspaper text-lg"></i>
+            <span class="text-xs font-bold">YANGILIK</span>
         </button>
-        <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center gap-1 transition-all duration-300 text-slate-500">
-            <i class="far fa-user text-[22px] mb-0.5"></i>
-            <span class="text-[9px] font-black tracking-[1px]">PROFIL</span>
+        <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center gap-0.5 transition-all text-slate-500">
+            <i class="far fa-user text-lg"></i>
+            <span class="text-xs font-bold">PROFIL</span>
         </button>
     </nav>
 
     <audio id="main-audio"></audio>
 
     <script>
-        // Google Sheets ID
-        const S_ID = '1GAIOHuWNt6cfPvTrHvBrK_Hk92Jc_JlMdtzeUFhcisw';
-        
-        // Data URLs
-        const Q_SONGS = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C,D,E,F&gid=0`;
-        const Q_NEWS = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C,D&gid=1698017317`;
-        const Q_PROFILE = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C&gid=678047652`;
-        const Q_STORY = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C,D&gid=10300380`;
+        // Test data - Yangiliklar uchun
+        const testNews = [
+            {
+                title: "Yangi Qo'shiq Chiqdi",
+                category: "YANGILIK",
+                description: "Eng sog'ingan san'atkoringizdan yangi qo'shiq turli platformalarda mavjud!",
+                image: "https://via.placeholder.com/400x200?text=New+Song"
+            },
+            {
+                title: "Kontsert E'lonlandi",
+                category: "E'LON",
+                description: "2026 yilida yangi kontsert kunida bo'lib o'tadi. Chipta sotilishiga boshlandi!",
+                image: "https://via.placeholder.com/400x200?text=Concert"
+            },
+            {
+                title: "Top 10 Qo'shiqlar",
+                category: "REJTING",
+                description: "Bu hafta eng ko'p tinglangan qo'shiqlarni ko'ring va ozingiznikini qo'shing.",
+                image: "https://via.placeholder.com/400x200?text=Top+10"
+            }
+        ];
 
         let audio = document.getElementById('main-audio');
         let currentSong = null;
         let currentSongIndex = -1;
         let allSongsFlat = [];
-        let allSongsData = [];
-        let groupedSections = []; 
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let totalListeningHours = parseFloat(localStorage.getItem('listeningHours')) || 0;
 
-        // Keyboard Controls
+        // Keyboard
         document.addEventListener('keydown', (e) => {
-            if(e.code === 'Space') {
+            if(e.code === 'Space' && !document.getElementById('full-player').classList.contains('active')) {
                 e.preventDefault();
                 togglePlay();
             }
@@ -505,86 +434,105 @@
             if(e.code === 'ArrowLeft') previousSong();
         });
 
-        // Volume Control
-        document.getElementById('volume-slider').addEventListener('input', (e) => {
-            audio.volume = e.target.value / 100;
-            document.getElementById('volume-percent').innerText = e.target.value + '%';
-        });
-
-        // Data Fetcher
-        async function fetchGviz(url) {
-            try {
-                const res = await fetch(url);
-                const text = await res.text();
-                return JSON.parse(text.substring(47, text.length - 2)).table.rows.map(r => r.c.map(v => v ? v.v : ''));
-            } catch (e) { 
-                console.error("Ma'lumot yuklashda xatolik:", e); 
-                return []; 
-            }
-        }
-
-        // Main Load
         async function loadApp() {
-            // Songs
-            allSongsData = await fetchGviz(Q_SONGS);
-            processAndRenderSongs();
-            buildFlatSongsList();
-
-            // Stories
-            const storiesData = await fetchGviz(Q_STORY);
-            let stHtml = '';
-            storiesData.forEach((st) => {
-                if(st[0]) {
-                    stHtml += `
-                    <div class="flex flex-col items-center gap-2 cursor-pointer shrink-0 snap-center">
-                        <div class="w-[68px] h-[68px] rounded-full p-[2px] bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 shadow-lg relative">
-                            <div class="absolute inset-0 bg-black rounded-full m-[2px]"></div>
-                            <img src="${st[2] === 'video' ? 'https://cdn-icons-png.flaticon.com/512/0/375.png' : st[1]}" class="w-full h-full rounded-full object-cover relative z-10 border-2 border-transparent">
-                        </div>
-                        <span class="text-[11px] font-medium truncate w-16 text-center text-slate-300">${st[0]}</span>
-                    </div>`;
+            // Test qo'shiqlar
+            const testSongs = [
+                {
+                    section: "Eng Yangi",
+                    type: "list",
+                    title: "Unutasan Jim",
+                    artist: "Fayzulloh Zokirov",
+                    url: "https://github.com/azziyy/Tabrik/raw/refs/heads/main/Mahmudjon_Inomjonov_Jahongir_Otajonov_happy_birthday_to_you.mp3",
+                    img: "https://via.placeholder.com/300x300?text=Song1"
+                },
+                {
+                    section: "Eng Yangi",
+                    type: "list",
+                    title: "O'ylamading",
+                    artist: "Munisa Rizaeva",
+                    url: "https://github.com/azziyy/Tabrik/raw/refs/heads/main/Mahmudjon_Inomjonov_Jahongir_Otajonov_happy_birthday_to_you.mp3",
+                    img: "https://via.placeholder.com/300x300?text=Song2"
+                },
+                {
+                    section: "Eng Yangi",
+                    type: "list",
+                    title: "Konsta",
+                    artist: "Azizbek",
+                    url: "https://github.com/azziyy/Tabrik/raw/refs/heads/main/Mahmudjon_Inomjonov_Jahongir_Otajonov_happy_birthday_to_you.mp3",
+                    img: "https://via.placeholder.com/300x300?text=Song3"
                 }
-            });
-            document.getElementById('stories-container').innerHTML = stHtml;
+            ];
 
-            // News
-            const news = await fetchGviz(Q_NEWS);
-            let nHtml = '';
-            news.reverse().forEach(n => {
-                if(n[1]) {
-                    nHtml += `
-                    <div class="music-card rounded-2xl overflow-hidden border-white/5">
-                        ${n[3] ? `<img src="${n[3]}" class="w-full h-48 object-cover">` : ''}
-                        <div class="p-5">
-                            <span class="inline-block px-2 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-bold tracking-widest uppercase rounded mb-3">${n[0]}</span>
-                            <h3 class="text-xl font-bold mb-2 text-white font-display">${n[1]}</h3>
-                            <p class="text-sm text-slate-400 leading-relaxed">${n[2]}</p>
-                        </div>
-                    </div>`;
-                }
-            });
-            document.getElementById('news-area').innerHTML = nHtml;
-
-            // Profile
-            const prof = await fetchGviz(Q_PROFILE);
-            if(prof.length > 0) {
-                updateProfileStats();
-            }
-
+            renderSongs(testSongs);
+            buildFlatSongsList(testSongs);
+            renderNews();
+            updateProfileStats();
             audio.volume = 0.7;
         }
 
-        function buildFlatSongsList() {
-            allSongsFlat = [];
-            allSongsData.forEach(row => {
-                const songTitle = row[2];
-                const songArtist = row[3];
-                const songUrl = row[4];
-                const songImg = row[5];
-                if(songTitle && songUrl) {
-                    allSongsFlat.push({title: songTitle, artist: songArtist, url: songUrl, img: songImg});
+        function renderSongs(songs) {
+            const container = document.getElementById('dynamic-content');
+            const groups = {};
+            
+            songs.forEach(song => {
+                if (!groups[song.section]) {
+                    groups[song.section] = {
+                        title: song.section,
+                        type: song.type,
+                        songs: []
+                    };
                 }
+                groups[song.section].songs.push(song);
             });
+
+            let html = '';
+            Object.values(groups).forEach(section => {
+                html += `<div class="px-4 mt-6 mb-3"><h2 class="font-bold text-lg text-white">${section.title}</h2></div>`;
+                html += `<div class="flex flex-col gap-2 px-4">`;
+                
+                section.songs.forEach(song => {
+                    html += `
+                    <div class="music-card p-2 flex items-center gap-3 cursor-pointer" onclick="playSong('${song.url}', '${song.title.replace(/'/g, "\\'")}', '${song.artist.replace(/'/g, "\\'")}', '${song.img}')">
+                        <img src="${song.img}" class="w-12 h-12 rounded-lg object-cover shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-sm text-white truncate">${song.title}</h3>
+                            <p class="text-xs text-slate-400 truncate">${song.artist}</p>
+                        </div>
+                    </div>`;
+                });
+                
+                html += `</div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function buildFlatSongsList(songs) {
+            allSongsFlat = songs.map(s => ({
+                title: s.title,
+                artist: s.artist,
+                url: s.url,
+                img: s.img
+            }));
+        }
+
+        function renderNews() {
+            const newsArea = document.getElementById('news-area');
+            let html = '';
+            
+            testNews.forEach(news => {
+                html += `
+                <div class="music-card rounded-lg overflow-hidden">
+                    <img src="${news.image}" class="w-full h-32 object-cover">
+                    <div class="p-4">
+                        <span class="inline-block px-2 py-1 bg-blue-500/10 text-blue-400 text-xs font-bold mb-2">${news.category}</span>
+                        <h3 class="text-base font-bold text-white mb-1">${news.title}</h3>
+                        <p class="text-sm text-slate-400">${news.description}</p>
+                    </div>
+                </div>`;
+            });
+
+            newsArea.innerHTML = html;
         }
 
         function updateProfileStats() {
@@ -593,115 +541,19 @@
             document.getElementById('stat-favorites').innerText = favorites.length;
         }
 
-        function processAndRenderSongs() {
-            const container = document.getElementById('dynamic-content');
-            let finalHtml = '';
-            const groups = {};
-            
-            allSongsData.forEach(row => {
-                const secTitle = row[0];
-                const secView = row[1] ? row[1].toLowerCase().trim() : 'list';
-                const songTitle = row[2];
-                const songArtist = row[3];
-                const songUrl = row[4];
-                const songImg = row[5];
-
-                if(!songTitle || !secTitle) return;
-
-                if (!groups[secTitle]) {
-                    groups[secTitle] = {
-                        title: secTitle,
-                        viewType: secView,
-                        songs: []
-                    };
-                }
-                
-                groups[secTitle].songs.push({ title: songTitle, artist: songArtist, url: songUrl, img: songImg });
-            });
-
-            Object.values(groups).forEach(section => {
-                finalHtml += `
-                    <div class="px-6 mt-8 mb-4 flex justify-between items-end">
-                        <h2 class="font-bold text-[22px] tracking-tight font-display text-white">${section.title}</h2>
-                        <span class="text-[12px] font-medium text-blue-500 cursor-pointer">Barchasi</span>
-                    </div>`;
-
-                let wrapperClass = '';
-                if (section.viewType === 'carousel') {
-                    wrapperClass = 'flex overflow-x-auto gap-4 snap-x hide-scroll pb-4 px-6';
-                } else if (section.viewType === 'grid') {
-                    wrapperClass = 'grid grid-cols-2 gap-4 px-6 pb-2';
-                } else {
-                    wrapperClass = 'flex flex-col gap-3 px-6 pb-2';
-                }
-
-                finalHtml += `<div class="${wrapperClass}">`;
-
-                section.songs.forEach(song => {
-                    const safeArgs = `'${song.url}', '${song.title.replace(/'/g, "\\'")}', '${song.artist.replace(/'/g, "\\'")}', '${song.img}'`;
-                    
-                    if (section.viewType === 'carousel') {
-                        finalHtml += `
-                        <div class="music-card shrink-0 w-[78vw] max-w-[320px] snap-center p-3 cursor-pointer" onclick="playSong(${safeArgs})">
-                            <div class="relative w-full aspect-video rounded-xl overflow-hidden mb-3">
-                                <img src="${song.img}" class="w-full h-full object-cover">
-                                <div class="play-overlay"><i class="fas fa-play text-white text-3xl"></i></div>
-                            </div>
-                            <h3 class="font-semibold text-white text-[16px] truncate font-display">${song.title}</h3>
-                            <p class="text-[13px] text-slate-400 truncate mt-0.5">${song.artist}</p>
-                        </div>`;
-                    } else if (section.viewType === 'grid') {
-                        finalHtml += `
-                        <div class="music-card p-3 cursor-pointer" onclick="playSong(${safeArgs})">
-                            <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3">
-                                <img src="${song.img}" class="w-full h-full object-cover">
-                                <div class="play-overlay"><i class="fas fa-play text-white text-2xl"></i></div>
-                            </div>
-                            <h3 class="font-semibold text-white text-[14px] truncate font-display">${song.title}</h3>
-                            <p class="text-[12px] text-slate-400 truncate mt-0.5">${song.artist}</p>
-                        </div>`;
-                    } else {
-                        finalHtml += `
-                        <div class="music-card p-3 flex items-center gap-4 cursor-pointer" onclick="playSong(${safeArgs})">
-                            <img src="${song.img}" class="w-14 h-14 rounded-xl object-cover shrink-0">
-                            <div class="flex-1 min-w-0">
-                                <h3 class="font-semibold text-white text-[15px] truncate font-display mb-0.5">${song.title}</h3>
-                                <p class="text-[13px] text-slate-400 truncate">${song.artist}</p>
-                            </div>
-                        </div>`;
-                    }
-                });
-
-                finalHtml += `</div>`;
-            });
-
-            container.innerHTML = finalHtml || `<p class="text-center text-slate-500 mt-10">Musiqalar topilmadi</p>`;
-        }
-
         function switchTab(tab) {
             document.querySelectorAll('main').forEach(m => m.classList.add('hidden'));
             document.getElementById(`view-${tab}`).classList.remove('hidden');
             
-            const navButtons = {
-                home: { id: 'nav-home', icon: 'fa-music' },
-                news: { id: 'nav-news', icon: 'fa-newspaper' },
-                profile: { id: 'nav-profile', icon: 'fa-user' }
-            };
-
-            Object.keys(navButtons).forEach(key => {
-                const btn = document.getElementById(navButtons[key].id);
-                const icon = btn.querySelector('i');
-                
-                if (key === tab) {
-                    btn.classList.add('text-blue-500');
-                    btn.classList.remove('text-slate-500');
-                    icon.className = `fas ${navButtons[key].icon} text-[22px] mb-0.5`;
-                } else {
-                    btn.classList.add('text-slate-500');
-                    btn.classList.remove('text-blue-500');
-                    icon.className = `far ${navButtons[key].icon} text-[22px] mb-0.5`;
-                }
+            const buttons = ['nav-home', 'nav-news', 'nav-profile'];
+            buttons.forEach(btn => {
+                document.getElementById(btn).classList.remove('text-blue-500');
+                document.getElementById(btn).classList.add('text-slate-500');
             });
+            
+            const tabMap = {home: 'nav-home', news: 'nav-news', profile: 'nav-profile'};
+            document.getElementById(tabMap[tab]).classList.add('text-blue-500');
+            document.getElementById(tabMap[tab]).classList.remove('text-slate-500');
 
             if(tab === 'profile') updateProfileStats();
         }
@@ -710,7 +562,7 @@
             currentSong = {url, title, artist, img};
             currentSongIndex = allSongsFlat.findIndex(s => s.url === url);
             
-            audio.src = url; 
+            audio.src = url;
             audio.play();
             
             document.getElementById('mini-player').classList.remove('hidden');
@@ -742,14 +594,14 @@
         }
 
         function togglePlay(e) {
-            if(e) e.stopPropagation(); 
+            if(e) e.stopPropagation();
             if(!audio.src) return;
 
-            if(audio.paused) { 
-                audio.play(); 
+            if(audio.paused) {
+                audio.play();
                 updatePlayPauseUI(true);
-            } else { 
-                audio.pause(); 
+            } else {
+                audio.pause();
                 updatePlayPauseUI(false);
             }
         }
@@ -759,15 +611,14 @@
             const fpIcon = document.getElementById('fp-icon');
 
             if(isPlaying) {
-                mpIcon.className = 'fas fa-pause text-white text-sm';
-                fpIcon.className = 'fas fa-pause text-3xl text-white';
+                mpIcon.className = 'fas fa-pause text-white text-xs';
+                fpIcon.className = 'fas fa-pause text-white text-2xl';
             } else {
-                mpIcon.className = 'fas fa-play text-white text-sm ml-0.5';
-                fpIcon.className = 'fas fa-play text-3xl text-white ml-1';
+                mpIcon.className = 'fas fa-play text-white text-xs ml-0.5';
+                fpIcon.className = 'fas fa-play text-white text-2xl ml-1';
             }
         }
 
-        // Progress & Time
         audio.addEventListener('timeupdate', () => {
             if(!audio.duration) return;
             const progressPercent = (audio.currentTime / audio.duration) * 100;
@@ -782,15 +633,14 @@
         audio.addEventListener('ended', () => {
             totalListeningHours += audio.duration / 3600;
             localStorage.setItem('listeningHours', totalListeningHours);
-            updateProfileStats();
             nextSong();
         });
 
         function seekAudio(e) {
             if(!audio.duration) return;
-            const container = e.currentTarget;
-            const clickX = e.offsetX;
-            const width = container.clientWidth;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
             audio.currentTime = (clickX / width) * audio.duration;
         }
 
@@ -800,14 +650,14 @@
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;
         }
 
-        function openFullPlayer() { 
-            document.getElementById('full-player').classList.add('active'); 
-        }
-        function closeFullPlayer() { 
-            document.getElementById('full-player').classList.remove('active'); 
+        function openFullPlayer() {
+            document.getElementById('full-player').classList.add('active');
         }
 
-        // Favorites
+        function closeFullPlayer() {
+            document.getElementById('full-player').classList.remove('active');
+        }
+
         function toggleFavoriteCurrent() {
             if(!currentSong) return;
             const index = favorites.findIndex(f => f.url === currentSong.url);
@@ -816,7 +666,6 @@
             localStorage.setItem('favorites', JSON.stringify(favorites));
             updateCurrentHeart();
             updateProfileStats();
-            if(!document.getElementById('view-favorites').classList.contains('hidden')) showFavorites();
         }
 
         function updateCurrentHeart() {
@@ -824,69 +673,48 @@
             const isFav = favorites.some(f => f.url === currentSong.url);
             const fpHeart = document.getElementById('fp-heart');
             if(isFav) {
-                fpHeart.className = 'fas fa-heart text-red-500 scale-110 transition-transform';
+                fpHeart.className = 'fas fa-heart text-red-500';
             } else {
-                fpHeart.className = 'far fa-heart text-white/70 transition-transform';
+                fpHeart.className = 'far fa-heart text-white/70';
             }
         }
 
         function showFavorites() {
             switchTab('favorites');
-            let fHtml = '';
+            let html = '';
             favorites.forEach(f => {
-                const safeArgs = `'${f.url}', '${f.title.replace(/'/g, "\\'")}', '${f.artist.replace(/'/g, "\\'")}', '${f.img}'`;
-                fHtml += `
-                <div class="music-card p-3 flex items-center gap-4 cursor-pointer border-white/5" onclick="playSong(${safeArgs})">
-                    <img src="${f.img}" class="w-16 h-16 rounded-xl object-cover shadow-md shrink-0">
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-semibold text-white text-[15px] truncate font-display mb-1">${f.title}</h3>
-                        <p class="text-[13px] text-slate-400 truncate">${f.artist}</p>
+                html += `
+                <div class="music-card p-2 flex items-center gap-3 cursor-pointer" onclick="playSong('${f.url}', '${f.title.replace(/'/g, "\\'")}', '${f.artist.replace(/'/g, "\\'")}', '${f.img}')">
+                    <img src="${f.img}" class="w-12 h-12 rounded-lg object-cover shrink-0">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-sm text-white truncate">${f.title}</h3>
+                        <p class="text-xs text-slate-400 truncate">${f.artist}</p>
                     </div>
-                    <i class="fas fa-heart text-red-500 text-lg mr-2"></i>
+                    <i class="fas fa-heart text-red-500"></i>
                 </div>`;
             });
-            document.getElementById('favorites-area').innerHTML = fHtml || `
-                <div class="text-center mt-20 fade-in">
-                    <div class="w-24 h-24 bg-[#131826] rounded-full flex items-center justify-center mx-auto mb-6 border border-white/5">
-                        <i class="far fa-heart text-4xl text-slate-600"></i>
-                    </div>
-                    <p class="text-slate-400 font-medium text-sm">Siz sevgan musiqalar bu yerda saqlanadi</p>
-                </div>
-            `;
+            document.getElementById('favorites-area').innerHTML = html || `<p class="text-center text-slate-400 mt-8">Sevimli qo'shiq yo'q</p>`;
         }
 
-        // Volume Modal
-        function openVolumeControl() {
-            document.getElementById('volume-modal').classList.remove('hidden');
-        }
-        function closeVolumeModal() {
-            document.getElementById('volume-modal').classList.add('hidden');
-        }
-
-        // Share Modal
         function openShareModal() {
             document.getElementById('share-modal').classList.add('active');
         }
+
         function closeShareModal() {
             document.getElementById('share-modal').classList.remove('active');
         }
 
         function shareTo(platform) {
             if(!currentSong) return;
+            const text = `🎵 "${currentSong.title}" - ${currentSong.artist}\n🎧 Azizbek PRO App`;
             
-            const text = `🎵 "${currentSong.title}" - ${currentSong.artist}\n\n🎧 Azizbek PRO App orqali tinglang!`;
-            const urls = {
-                telegram: `https://t.me/share/url?url=azizbek.pro&text=${encodeURIComponent(text)}`,
-                whatsapp: `https://wa.me/?text=${encodeURIComponent(text)}`,
-                twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
-                copy: null
-            };
-
             if(platform === 'copy') {
                 navigator.clipboard.writeText(text);
-                alert('✅ Nusxalanida!');
-            } else {
-                window.open(urls[platform], '_blank');
+                alert('✅ Nusxalandi!');
+            } else if(platform === 'telegram') {
+                window.open(`https://t.me/share/url?text=${encodeURIComponent(text)}`, '_blank');
+            } else if(platform === 'whatsapp') {
+                window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
             }
             closeShareModal();
         }
