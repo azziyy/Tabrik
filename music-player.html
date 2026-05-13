@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AZIZBEK PRO APP</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+    :root { 
+        --bg-base: #020408; 
+        --bg-surface: #0a0f1d;
+        --bg-card: rgba(255, 255, 255, 0.03);
+        --bg-card-hover: rgba(255, 255, 255, 0.07);
+        --accent-primary: #3b82f6; 
+        --accent-glow: rgba(59, 130, 246, 0.5);
+        --text-main: #ffffff;
+        --text-muted: #94a3b8;
+        --border-glass: rgba(255, 255, 255, 0.08);
+        --glass-effect: blur(20px) saturate(180%);
+    }
+    
+    body { 
+        background-color: var(--bg-base); 
+        color: var(--text-main); 
+        font-family: 'Outfit', 'Inter', sans-serif; 
+        overflow-x: hidden; 
+        -webkit-tap-highlight-color: transparent;
+        line-height: 1.5;
+    }
+
+    h1, h2, h3, .font-display {
+        font-family: 'Outfit', sans-serif;
+        letter-spacing: -0.02em;
+    }
+
+    .glass-panel {
+        background: rgba(10, 15, 29, 0.7);
+        backdrop-filter: var(--glass-effect);
+        -webkit-backdrop-filter: var(--glass-effect);
+        border: 1px solid var(--border-glass);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .music-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border-glass);
+        border-radius: 24px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .music-card:active {
+        transform: scale(0.95) translateY(2px);
+        background: var(--bg-card-hover);
+        border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .play-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    .music-card:active .play-overlay { 
+        opacity: 1;
+        backdrop-filter: blur(4px);
+    }
+
+    .hide-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+    }
+    .hide-scroll::-webkit-scrollbar { display: none; }
+    
+    .fade-in { 
+        animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+    }
+    @keyframes fadeIn { 
+        from { opacity: 0; transform: translateY(20px); } 
+        to { opacity: 1; transform: translateY(0); } 
+    }
+    
+    .slide-up { 
+        transform: translateY(105%); 
+        transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1); 
+    }
+    .slide-up.active { 
+        transform: translateY(0); 
+    }
+
+    .neon-avatar {
+        position: relative;
+        padding: 4px;
+        background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+        border-radius: 30px;
+        animation: neonRotate 4s linear infinite;
+        background-size: 200% 200%;
+    }
+    @keyframes neonRotate {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .progress-container { 
+        width: 100%; 
+        height: 5px; 
+        background: rgba(255, 255, 255, 0.05); 
+        border-radius: 10px; 
+        cursor: pointer; 
+        position: relative; 
+        overflow: visible;
+    }
+    .progress-bar { 
+        height: 100%; 
+        background: linear-gradient(90deg, #3b82f6, #60a5fa); 
+        border-radius: 10px; 
+        width: 0%; 
+        position: relative; 
+        box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .progress-bar::after { 
+        content: ''; 
+        position: absolute; 
+        right: -6px; 
+        top: 50%; 
+        transform: translateY(-50%); 
+        width: 14px; 
+        height: 14px; 
+        background: #ffffff; 
+        border-radius: 50%; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 5px var(--accent-primary);
+        border: 2px solid var(--accent-primary);
+    }
+
+    nav.glass-panel {
+        border-radius: 32px 32px 0 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .volume-slider {
+        width: 100%;
+        height: 4px;
+        border-radius: 5px;
+        background: linear-gradient(to right, #3b82f6, #60a5fa);
+        outline: none;
+        -webkit-appearance: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+    }
+
+    .volume-slider::-moz-range-thumb {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        border: none;
+    }
+
+    .pulse-animation {
+        animation: volumePulse 0.5s ease;
+    }
+
+    @keyframes volumePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+
+    .stat-box {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 16px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 28px;
+        font-weight: bold;
+        color: #3b82f6;
+        display: block;
+    }
+
+    .stat-label {
+        font-size: 12px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        margin-top: 5px;
+        letter-spacing: 1px;
+    }
+
+    .share-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: flex-end;
+        z-index: 999;
+        display: none;
+    }
+
+    .share-modal.active {
+        display: flex;
+    }
+
+    .share-sheet {
+        background: #0a0f1d;
+        width: 100%;
+        border-radius: 30px 30px 0 0;
+        padding: 20px;
+        animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    </style>
+
+</head>
+<body class="pb-32">
+
+    <!-- Header -->
+    <header class="px-6 py-4 flex justify-between items-center sticky top-0 z-40 glass-panel border-b-0">
+        <button class="text-xl text-slate-400 hover:text-white transition w-10 h-10 flex items-center justify-start">
+            <i class="fas fa-bars-staggered"></i>
+        </button>
+        <h1 class="text-xl font-bold tracking-widest text-white italic uppercase font-display flex items-center gap-1">
+            AZIZBEK <span class="text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded-md text-sm not-italic ml-1">PRO</span>
+        </h1>
+        <button onclick="showFavorites()" class="text-xl text-red-500 hover:scale-110 transition w-10 h-10 flex items-center justify-end">
+            <i class="fas fa-heart"></i>
+        </button>
+    </header>
+
+    <!-- Main Views -->
+    <main id="view-home" class="fade-in">
+        <div class="pt-6 pb-2">
+            <div id="stories-container" class="flex gap-4 px-6 overflow-x-auto hide-scroll snap-x"></div>
+        </div>
+        <div id="dynamic-content" class="pb-6">
+            <div class="flex justify-center items-center h-40">
+                <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        </div>
+    </main>
+
+    <main id="view-news" class="hidden px-6 py-8 fade-in">
+        <h2 class="font-bold text-2xl mb-8 tracking-tight font-display text-white">Yangiliklar</h2>
+        <div id="news-area" class="grid gap-6"></div>
+    </main>
+
+    <main id="view-profile" class="hidden px-6 py-10 text-center fade-in">
+        <h2 class="font-bold text-2xl mb-8 text-white font-display">Mening Profilim</h2>
+        <div id="profile-area" class="flex flex-col items-center">
+            <div class="relative w-32 h-32 mx-auto mb-6 neon-avatar">
+                <img id="profile-img" src="https://raw.githubusercontent.com/azziyy/Tabrik/refs/heads/main/Screenshot_2026-05-12-19-14-39-471_com.instagram.android.png" class="w-full h-full rounded-full object-cover">
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-6 font-display">Azizbek</h3>
+            
+            <!-- Statistics -->
+            <div class="grid grid-cols-3 gap-3 w-full mb-8">
+                <div class="stat-box">
+                    <span class="stat-number" id="stat-songs">0</span>
+                    <span class="stat-label">Qo'shiqlar</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="stat-hours">0</span>
+                    <span class="stat-label">Soatlar</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number" id="stat-favorites">0</span>
+                    <span class="stat-label">Sevimli</span>
+                </div>
+            </div>
+
+            <!-- Bio -->
+            <div class="music-card p-6 rounded-2xl text-left border-white/5 w-full">
+                <h4 class="text-white font-semibold mb-2 font-display">📝 Haqimda</h4>
+                <p class="text-slate-300 text-sm leading-relaxed">🎵 Musiqa sevuvchi | 💻 Developer | 🚀 Innovator</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="grid grid-cols-2 gap-3 w-full mt-6">
+                <button onclick="openVolumeControl()" class="music-card p-3 rounded-xl text-center border-white/5 flex items-center justify-center gap-2 hover:bg-white/5 transition">
+                    <i class="fas fa-volume-high text-blue-500"></i>
+                    <span class="text-sm font-semibold text-white">Ovoz</span>
+                </button>
+                <button onclick="openShareModal()" class="music-card p-3 rounded-xl text-center border-white/5 flex items-center justify-center gap-2 hover:bg-white/5 transition">
+                    <i class="fas fa-share-alt text-green-500"></i>
+                    <span class="text-sm font-semibold text-white">Ulashish</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <main id="view-favorites" class="hidden px-6 py-8 fade-in">
+        <h2 class="font-bold text-2xl mb-8 text-white font-display flex items-center gap-3">
+            <i class="fas fa-heart text-red-500"></i> Sevimlilar
+        </h2>
+        <div id="favorites-area" class="flex flex-col gap-3"></div>
+    </main>
+
+    <!-- Mini Player -->
+    <div id="mini-player" class="fixed bottom-[100px] left-4 right-4 glass-panel rounded-3xl p-2 z-30 hidden transition-all cursor-pointer shadow-2xl" onclick="openFullPlayer()">
+        <div class="flex items-center gap-4 px-2 py-1">
+            <div class="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/10 shrink-0">
+                <img id="mp-img" src="" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <h4 id="mp-title" class="truncate font-bold text-[15px] text-white font-display mb-0.5">Nomi</h4>
+                <p id="mp-artist" class="text-[12px] text-slate-400 truncate">San'atkor</p>
+            </div>
+            <button class="w-11 h-11 bg-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/20" onclick="togglePlay(event)">
+                <i id="mp-icon" class="fas fa-play text-white text-sm ml-0.5"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Full Player -->
+    <div id="full-player" class="fixed inset-0 bg-[#020408] z-50 slide-up flex flex-col overflow-hidden">
+        <!-- Dynamic Background -->
+        <div class="absolute inset-0 z-0">
+            <img id="fp-bg-blur" src="" class="w-full h-full object-cover opacity-30 blur-[80px] scale-150">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020408] via-transparent to-black/20"></div>
+        </div>
+
+        <div class="relative z-10 flex flex-col h-full px-8 py-12">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-10">
+                <button onclick="closeFullPlayer()" class="w-12 h-12 flex items-center justify-center text-xl text-white/70 bg-white/5 rounded-2xl backdrop-blur-xl border border-white/10 hover:bg-white/10 transition">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="text-center">
+                    <p class="text-[10px] tracking-[4px] uppercase font-bold text-white/40">IJRO ETILMOQDA</p>
+                </div>
+                <button onclick="toggleFavoriteCurrent()" class="w-12 h-12 flex items-center justify-center text-xl bg-white/5 rounded-2xl backdrop-blur-xl border border-white/10 hover:bg-white/10 transition">
+                    <i id="fp-heart" class="far fa-heart text-white/70"></i>
+                </button>
+            </div>
+            
+            <!-- Album Artwork -->
+            <div class="flex-1 flex items-center justify-center mb-10">
+                <div class="w-full max-w-[320px] aspect-square relative">
+                    <img id="fp-img" src="" class="w-full h-full rounded-[40px] object-cover shadow-[0_40px_80px_rgba(0,0,0,0.6)] border border-white/10 relative z-10">
+                    <div class="absolute inset-4 bg-blue-500/20 blur-3xl -z-0"></div>
+                </div>
+            </div>
+            
+            <!-- Info -->
+            <div class="flex justify-between items-end mb-8">
+                <div class="flex-1 min-w-0">
+                    <h2 id="fp-title" class="text-3xl font-black text-white mb-2 font-display truncate tracking-tight">Qo'shiq nomi</h2>
+                    <p id="fp-artist" class="text-blue-400 font-bold text-lg truncate opacity-90 tracking-wide">San'atkor</p>
+                </div>
+                <button onclick="openShareModal()" class="w-12 h-12 flex items-center justify-center bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition">
+                    <i class="fas fa-share-alt text-blue-500"></i>
+                </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mb-10">
+                <div class="progress-container mb-4" onclick="seekAudio(event)">
+                    <div id="fp-progress" class="progress-bar"></div>
+                </div>
+                <div class="flex justify-between text-[11px] font-bold text-white/30 tracking-widest">
+                    <span id="fp-current-time">0:00</span>
+                    <span id="fp-duration">0:00</span>
+                </div>
+            </div>
+            
+            <!-- Controls -->
+            <div class="flex justify-between items-center px-2">
+                <button class="text-xl text-white/30 hover:text-white transition"><i class="fas fa-shuffle"></i></button>
+                <div class="flex items-center gap-8">
+                    <button onclick="previousSong()" class="text-3xl text-white/80 hover:text-white transition active:scale-90"><i class="fas fa-backward-step"></i></button>
+                    <button onclick="togglePlay()" class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-[0_15px_40px_rgba(59,130,246,0.4)] active:scale-95 transition-transform hover:bg-blue-700">
+                        <i id="fp-icon" class="fas fa-play text-4xl text-white ml-1"></i>
+                    </button>
+                    <button onclick="nextSong()" class="text-3xl text-white/80 hover:text-white transition active:scale-90"><i class="fas fa-forward-step"></i></button>
+                </div>
+                <button class="text-xl text-white/30 hover:text-white transition"><i class="fas fa-redo"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volume Control Modal -->
+    <div id="volume-modal" class="fixed inset-0 bg-black/50 z-40 hidden flex items-end">
+        <div class="glass-panel w-full rounded-t-3xl p-6 border-b-0">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-white font-bold text-lg">Ovoz Boshqaruvi</h3>
+                <button onclick="closeVolumeModal()" class="text-white/50 hover:text-white">
+                    <i class="fas fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div class="flex items-center gap-4">
+                <i class="fas fa-volume-low text-blue-500"></i>
+                <input type="range" id="volume-slider" min="0" max="100" value="70" class="volume-slider flex-1">
+                <i class="fas fa-volume-high text-blue-500"></i>
+            </div>
+            <div class="text-center mt-4">
+                <span class="text-slate-400 text-sm" id="volume-percent">70%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="share-modal" class="share-modal">
+        <div class="share-sheet">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-white font-bold text-lg">Qo'shiqni Ulashish</h3>
+                <button onclick="closeShareModal()" class="text-white/50 hover:text-white">
+                    <i class="fas fa-xmark text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="flex gap-3 flex-wrap">
+                <button onclick="shareTo('telegram')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
+                    <i class="fab fa-telegram text-blue-500 text-2xl"></i>
+                    <span class="text-xs text-slate-300">Telegram</span>
+                </button>
+                <button onclick="shareTo('whatsapp')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
+                    <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+                    <span class="text-xs text-slate-300">WhatsApp</span>
+                </button>
+                <button onclick="shareTo('twitter')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
+                    <i class="fab fa-twitter text-sky-500 text-2xl"></i>
+                    <span class="text-xs text-slate-300">Twitter</span>
+                </button>
+                <button onclick="shareTo('copy')" class="flex flex-col items-center gap-2 p-4 glass-panel rounded-2xl hover:bg-white/10 transition">
+                    <i class="fas fa-copy text-purple-500 text-2xl"></i>
+                    <span class="text-xs text-slate-300">Nusxalash</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 w-full glass-panel border-t border-white/5 pb-6 pt-3 px-8 flex justify-between items-center z-40 rounded-t-[35px] shadow-[0_-15px_40px_rgba(0,0,0,0.6)]">
+        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center gap-1 transition-all duration-300 text-blue-500">
+            <i class="fas fa-music text-[22px] mb-0.5"></i>
+            <span class="text-[9px] font-black tracking-[1px]">ASOSIY</span>
+        </button>
+        <button onclick="switchTab('news')" id="nav-news" class="flex flex-col items-center gap-1 transition-all duration-300 text-slate-500">
+            <i class="far fa-newspaper text-[22px] mb-0.5"></i>
+            <span class="text-[9px] font-black tracking-[1px]">YANGILIK</span>
+        </button>
+        <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center gap-1 transition-all duration-300 text-slate-500">
+            <i class="far fa-user text-[22px] mb-0.5"></i>
+            <span class="text-[9px] font-black tracking-[1px]">PROFIL</span>
+        </button>
+    </nav>
+
+    <audio id="main-audio"></audio>
+
+    <script>
+        // Google Sheets ID
+        const S_ID = '1GAIOHuWNt6cfPvTrHvBrK_Hk92Jc_JlMdtzeUFhcisw';
+        
+        // Data URLs
+        const Q_SONGS = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C,D,E,F&gid=0`;
+        const Q_NEWS = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C,D&gid=1698017317`;
+        const Q_PROFILE = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C&gid=678047652`;
+        const Q_STORY = `https://docs.google.com/spreadsheets/d/${S_ID}/gviz/tq?tqx=out:json&tq=SELECT A,B,C,D&gid=10300380`;
+
+        let audio = document.getElementById('main-audio');
+        let currentSong = null;
+        let currentSongIndex = -1;
+        let allSongsFlat = [];
+        let allSongsData = [];
+        let groupedSections = []; 
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let totalListeningHours = parseFloat(localStorage.getItem('listeningHours')) || 0;
+
+        // Keyboard Controls
+        document.addEventListener('keydown', (e) => {
+            if(e.code === 'Space') {
+                e.preventDefault();
+                togglePlay();
+            }
+            if(e.code === 'ArrowRight') nextSong();
+            if(e.code === 'ArrowLeft') previousSong();
+        });
+
+        // Volume Control
+        document.getElementById('volume-slider').addEventListener('input', (e) => {
+            audio.volume = e.target.value / 100;
+            document.getElementById('volume-percent').innerText = e.target.value + '%';
+        });
+
+        // Data Fetcher
+        async function fetchGviz(url) {
+            try {
+                const res = await fetch(url);
+                const text = await res.text();
+                return JSON.parse(text.substring(47, text.length - 2)).table.rows.map(r => r.c.map(v => v ? v.v : ''));
+            } catch (e) { 
+                console.error("Ma'lumot yuklashda xatolik:", e); 
+                return []; 
+            }
+        }
+
+        // Main Load
+        async function loadApp() {
+            // Songs
+            allSongsData = await fetchGviz(Q_SONGS);
+            processAndRenderSongs();
+            buildFlatSongsList();
+
+            // Stories
+            const storiesData = await fetchGviz(Q_STORY);
+            let stHtml = '';
+            storiesData.forEach((st) => {
+                if(st[0]) {
+                    stHtml += `
+                    <div class="flex flex-col items-center gap-2 cursor-pointer shrink-0 snap-center">
+                        <div class="w-[68px] h-[68px] rounded-full p-[2px] bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 shadow-lg relative">
+                            <div class="absolute inset-0 bg-black rounded-full m-[2px]"></div>
+                            <img src="${st[2] === 'video' ? 'https://cdn-icons-png.flaticon.com/512/0/375.png' : st[1]}" class="w-full h-full rounded-full object-cover relative z-10 border-2 border-transparent">
+                        </div>
+                        <span class="text-[11px] font-medium truncate w-16 text-center text-slate-300">${st[0]}</span>
+                    </div>`;
+                }
+            });
+            document.getElementById('stories-container').innerHTML = stHtml;
+
+            // News
+            const news = await fetchGviz(Q_NEWS);
+            let nHtml = '';
+            news.reverse().forEach(n => {
+                if(n[1]) {
+                    nHtml += `
+                    <div class="music-card rounded-2xl overflow-hidden border-white/5">
+                        ${n[3] ? `<img src="${n[3]}" class="w-full h-48 object-cover">` : ''}
+                        <div class="p-5">
+                            <span class="inline-block px-2 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-bold tracking-widest uppercase rounded mb-3">${n[0]}</span>
+                            <h3 class="text-xl font-bold mb-2 text-white font-display">${n[1]}</h3>
+                            <p class="text-sm text-slate-400 leading-relaxed">${n[2]}</p>
+                        </div>
+                    </div>`;
+                }
+            });
+            document.getElementById('news-area').innerHTML = nHtml;
+
+            // Profile
+            const prof = await fetchGviz(Q_PROFILE);
+            if(prof.length > 0) {
+                updateProfileStats();
+            }
+
+            audio.volume = 0.7;
+        }
+
+        function buildFlatSongsList() {
+            allSongsFlat = [];
+            allSongsData.forEach(row => {
+                const songTitle = row[2];
+                const songArtist = row[3];
+                const songUrl = row[4];
+                const songImg = row[5];
+                if(songTitle && songUrl) {
+                    allSongsFlat.push({title: songTitle, artist: songArtist, url: songUrl, img: songImg});
+                }
+            });
+        }
+
+        function updateProfileStats() {
+            document.getElementById('stat-songs').innerText = allSongsFlat.length;
+            document.getElementById('stat-hours').innerText = Math.floor(totalListeningHours);
+            document.getElementById('stat-favorites').innerText = favorites.length;
+        }
+
+        function processAndRenderSongs() {
+            const container = document.getElementById('dynamic-content');
+            let finalHtml = '';
+            const groups = {};
+            
+            allSongsData.forEach(row => {
+                const secTitle = row[0];
+                const secView = row[1] ? row[1].toLowerCase().trim() : 'list';
+                const songTitle = row[2];
+                const songArtist = row[3];
+                const songUrl = row[4];
+                const songImg = row[5];
+
+                if(!songTitle || !secTitle) return;
+
+                if (!groups[secTitle]) {
+                    groups[secTitle] = {
+                        title: secTitle,
+                        viewType: secView,
+                        songs: []
+                    };
+                }
+                
+                groups[secTitle].songs.push({ title: songTitle, artist: songArtist, url: songUrl, img: songImg });
+            });
+
+            Object.values(groups).forEach(section => {
+                finalHtml += `
+                    <div class="px-6 mt-8 mb-4 flex justify-between items-end">
+                        <h2 class="font-bold text-[22px] tracking-tight font-display text-white">${section.title}</h2>
+                        <span class="text-[12px] font-medium text-blue-500 cursor-pointer">Barchasi</span>
+                    </div>`;
+
+                let wrapperClass = '';
+                if (section.viewType === 'carousel') {
+                    wrapperClass = 'flex overflow-x-auto gap-4 snap-x hide-scroll pb-4 px-6';
+                } else if (section.viewType === 'grid') {
+                    wrapperClass = 'grid grid-cols-2 gap-4 px-6 pb-2';
+                } else {
+                    wrapperClass = 'flex flex-col gap-3 px-6 pb-2';
+                }
+
+                finalHtml += `<div class="${wrapperClass}">`;
+
+                section.songs.forEach(song => {
+                    const safeArgs = `'${song.url}', '${song.title.replace(/'/g, "\\'")}', '${song.artist.replace(/'/g, "\\'")}', '${song.img}'`;
+                    
+                    if (section.viewType === 'carousel') {
+                        finalHtml += `
+                        <div class="music-card shrink-0 w-[78vw] max-w-[320px] snap-center p-3 cursor-pointer" onclick="playSong(${safeArgs})">
+                            <div class="relative w-full aspect-video rounded-xl overflow-hidden mb-3">
+                                <img src="${song.img}" class="w-full h-full object-cover">
+                                <div class="play-overlay"><i class="fas fa-play text-white text-3xl"></i></div>
+                            </div>
+                            <h3 class="font-semibold text-white text-[16px] truncate font-display">${song.title}</h3>
+                            <p class="text-[13px] text-slate-400 truncate mt-0.5">${song.artist}</p>
+                        </div>`;
+                    } else if (section.viewType === 'grid') {
+                        finalHtml += `
+                        <div class="music-card p-3 cursor-pointer" onclick="playSong(${safeArgs})">
+                            <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3">
+                                <img src="${song.img}" class="w-full h-full object-cover">
+                                <div class="play-overlay"><i class="fas fa-play text-white text-2xl"></i></div>
+                            </div>
+                            <h3 class="font-semibold text-white text-[14px] truncate font-display">${song.title}</h3>
+                            <p class="text-[12px] text-slate-400 truncate mt-0.5">${song.artist}</p>
+                        </div>`;
+                    } else {
+                        finalHtml += `
+                        <div class="music-card p-3 flex items-center gap-4 cursor-pointer" onclick="playSong(${safeArgs})">
+                            <img src="${song.img}" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-semibold text-white text-[15px] truncate font-display mb-0.5">${song.title}</h3>
+                                <p class="text-[13px] text-slate-400 truncate">${song.artist}</p>
+                            </div>
+                        </div>`;
+                    }
+                });
+
+                finalHtml += `</div>`;
+            });
+
+            container.innerHTML = finalHtml || `<p class="text-center text-slate-500 mt-10">Musiqalar topilmadi</p>`;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('main').forEach(m => m.classList.add('hidden'));
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            
+            const navButtons = {
+                home: { id: 'nav-home', icon: 'fa-music' },
+                news: { id: 'nav-news', icon: 'fa-newspaper' },
+                profile: { id: 'nav-profile', icon: 'fa-user' }
+            };
+
+            Object.keys(navButtons).forEach(key => {
+                const btn = document.getElementById(navButtons[key].id);
+                const icon = btn.querySelector('i');
+                
+                if (key === tab) {
+                    btn.classList.add('text-blue-500');
+                    btn.classList.remove('text-slate-500');
+                    icon.className = `fas ${navButtons[key].icon} text-[22px] mb-0.5`;
+                } else {
+                    btn.classList.add('text-slate-500');
+                    btn.classList.remove('text-blue-500');
+                    icon.className = `far ${navButtons[key].icon} text-[22px] mb-0.5`;
+                }
+            });
+
+            if(tab === 'profile') updateProfileStats();
+        }
+
+        function playSong(url, title, artist, img) {
+            currentSong = {url, title, artist, img};
+            currentSongIndex = allSongsFlat.findIndex(s => s.url === url);
+            
+            audio.src = url; 
+            audio.play();
+            
+            document.getElementById('mini-player').classList.remove('hidden');
+            document.getElementById('mp-title').innerText = title;
+            document.getElementById('mp-artist').innerText = artist;
+            document.getElementById('mp-img').src = img;
+            
+            document.getElementById('fp-title').innerText = title;
+            document.getElementById('fp-artist').innerText = artist;
+            document.getElementById('fp-img').src = img;
+            document.getElementById('fp-bg-blur').src = img;
+            
+            updatePlayPauseUI(true);
+            updateCurrentHeart();
+        }
+
+        function nextSong() {
+            if(allSongsFlat.length === 0) return;
+            currentSongIndex = (currentSongIndex + 1) % allSongsFlat.length;
+            const song = allSongsFlat[currentSongIndex];
+            playSong(song.url, song.title, song.artist, song.img);
+        }
+
+        function previousSong() {
+            if(allSongsFlat.length === 0) return;
+            currentSongIndex = (currentSongIndex - 1 + allSongsFlat.length) % allSongsFlat.length;
+            const song = allSongsFlat[currentSongIndex];
+            playSong(song.url, song.title, song.artist, song.img);
+        }
+
+        function togglePlay(e) {
+            if(e) e.stopPropagation(); 
+            if(!audio.src) return;
+
+            if(audio.paused) { 
+                audio.play(); 
+                updatePlayPauseUI(true);
+            } else { 
+                audio.pause(); 
+                updatePlayPauseUI(false);
+            }
+        }
+
+        function updatePlayPauseUI(isPlaying) {
+            const mpIcon = document.getElementById('mp-icon');
+            const fpIcon = document.getElementById('fp-icon');
+
+            if(isPlaying) {
+                mpIcon.className = 'fas fa-pause text-white text-sm';
+                fpIcon.className = 'fas fa-pause text-3xl text-white';
+            } else {
+                mpIcon.className = 'fas fa-play text-white text-sm ml-0.5';
+                fpIcon.className = 'fas fa-play text-3xl text-white ml-1';
+            }
+        }
+
+        // Progress & Time
+        audio.addEventListener('timeupdate', () => {
+            if(!audio.duration) return;
+            const progressPercent = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('fp-progress').style.width = `${progressPercent}%`;
+            document.getElementById('fp-current-time').innerText = formatTime(audio.currentTime);
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            document.getElementById('fp-duration').innerText = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('ended', () => {
+            totalListeningHours += audio.duration / 3600;
+            localStorage.setItem('listeningHours', totalListeningHours);
+            updateProfileStats();
+            nextSong();
+        });
+
+        function seekAudio(e) {
+            if(!audio.duration) return;
+            const container = e.currentTarget;
+            const clickX = e.offsetX;
+            const width = container.clientWidth;
+            audio.currentTime = (clickX / width) * audio.duration;
+        }
+
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        function openFullPlayer() { 
+            document.getElementById('full-player').classList.add('active'); 
+        }
+        function closeFullPlayer() { 
+            document.getElementById('full-player').classList.remove('active'); 
+        }
+
+        // Favorites
+        function toggleFavoriteCurrent() {
+            if(!currentSong) return;
+            const index = favorites.findIndex(f => f.url === currentSong.url);
+            if(index > -1) favorites.splice(index, 1);
+            else favorites.push(currentSong);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateCurrentHeart();
+            updateProfileStats();
+            if(!document.getElementById('view-favorites').classList.contains('hidden')) showFavorites();
+        }
+
+        function updateCurrentHeart() {
+            if(!currentSong) return;
+            const isFav = favorites.some(f => f.url === currentSong.url);
+            const fpHeart = document.getElementById('fp-heart');
+            if(isFav) {
+                fpHeart.className = 'fas fa-heart text-red-500 scale-110 transition-transform';
+            } else {
+                fpHeart.className = 'far fa-heart text-white/70 transition-transform';
+            }
+        }
+
+        function showFavorites() {
+            switchTab('favorites');
+            let fHtml = '';
+            favorites.forEach(f => {
+                const safeArgs = `'${f.url}', '${f.title.replace(/'/g, "\\'")}', '${f.artist.replace(/'/g, "\\'")}', '${f.img}'`;
+                fHtml += `
+                <div class="music-card p-3 flex items-center gap-4 cursor-pointer border-white/5" onclick="playSong(${safeArgs})">
+                    <img src="${f.img}" class="w-16 h-16 rounded-xl object-cover shadow-md shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-semibold text-white text-[15px] truncate font-display mb-1">${f.title}</h3>
+                        <p class="text-[13px] text-slate-400 truncate">${f.artist}</p>
+                    </div>
+                    <i class="fas fa-heart text-red-500 text-lg mr-2"></i>
+                </div>`;
+            });
+            document.getElementById('favorites-area').innerHTML = fHtml || `
+                <div class="text-center mt-20 fade-in">
+                    <div class="w-24 h-24 bg-[#131826] rounded-full flex items-center justify-center mx-auto mb-6 border border-white/5">
+                        <i class="far fa-heart text-4xl text-slate-600"></i>
+                    </div>
+                    <p class="text-slate-400 font-medium text-sm">Siz sevgan musiqalar bu yerda saqlanadi</p>
+                </div>
+            `;
+        }
+
+        // Volume Modal
+        function openVolumeControl() {
+            document.getElementById('volume-modal').classList.remove('hidden');
+        }
+        function closeVolumeModal() {
+            document.getElementById('volume-modal').classList.add('hidden');
+        }
+
+        // Share Modal
+        function openShareModal() {
+            document.getElementById('share-modal').classList.add('active');
+        }
+        function closeShareModal() {
+            document.getElementById('share-modal').classList.remove('active');
+        }
+
+        function shareTo(platform) {
+            if(!currentSong) return;
+            
+            const text = `🎵 "${currentSong.title}" - ${currentSong.artist}\n\n🎧 Azizbek PRO App orqali tinglang!`;
+            const urls = {
+                telegram: `https://t.me/share/url?url=azizbek.pro&text=${encodeURIComponent(text)}`,
+                whatsapp: `https://wa.me/?text=${encodeURIComponent(text)}`,
+                twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
+                copy: null
+            };
+
+            if(platform === 'copy') {
+                navigator.clipboard.writeText(text);
+                alert('✅ Nusxalanida!');
+            } else {
+                window.open(urls[platform], '_blank');
+            }
+            closeShareModal();
+        }
+
+        window.onload = loadApp;
+    </script>
+</body>
+</html>
